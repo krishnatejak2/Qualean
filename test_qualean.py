@@ -8,6 +8,20 @@ import os.path
 import re
 import inspect 
 
+README_CONTENT_CHECK_FOR = [
+    'Something',
+    'SomethingNew',
+    'add_something',
+    'clear_memory',
+    'critical_function',
+    'compare_strings_old',
+    'compare_strings_new',
+    'sleep',
+    'char_list',
+    'collection',
+    '__init__'
+]
+
 def test_readme_exists():
     assert os.path.isfile("README.md"), "README.md file missing!"
 
@@ -43,15 +57,13 @@ def test_indentations():
         assert len(space) % 4 == 2, "Your script contains misplaced indentations"
         assert len(re.sub(r'[^ ]', '', space)) % 4 == 0, "Your code indentation does not follow PEP8 guidelines" 
 
-
 def test_function_name_had_cap_letter():
     functions = inspect.getmembers(qualean, inspect.isfunction)
     for function in functions:
         assert len(re.findall('([A-Z])', function[0])) == 0, "You have used Capital letter(s) in your function names"
 
-
 def test_class_repr():
-    s = qualean.Qualean()
-    s_n = qualean.Qualean()
+    s = qualean.Qualean(1)
+    s_n = qualean.Qualean(1)
 
     assert 'object at' not in s.__repr__() and 'object at' not in s_n.__repr__()
